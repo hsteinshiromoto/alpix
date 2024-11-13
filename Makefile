@@ -13,7 +13,7 @@ GIT_REMOTE=$(shell basename $(shell git remote get-url origin))
 PROJECT_NAME=$(shell echo $(GIT_REMOTE:.git=))
 CURRENT_VERSION=$(shell git tag -l --sort=-creatordate | head -n 1 | cut -d "v" -f2-)
 
-DOCKER_IMAGE_NAME=hsteinshiromoto/${PROJECT_NAME}
+DOCKER_IMAGE_NAME=ghcr.io/hsteinshiromoto/${PROJECT_NAME}/${PROJECT_NAME}
 
 IMAGE_TAG=$(shell git ls-files -s Dockerfile | awk '{print $$2}' | cut -c1-16)
 
