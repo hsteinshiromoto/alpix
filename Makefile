@@ -15,10 +15,7 @@ CURRENT_VERSION=$(shell git tag -l --sort=-creatordate | head -n 1 | cut -d "v" 
 
 DOCKER_IMAGE_NAME=hsteinshiromoto/${PROJECT_NAME}
 
-BUILD_DATE = $(shell date +%Y%m%d-%H:%M:%S)
-
 IMAGE_TAG=$(shell git ls-files -s Dockerfile | awk '{print $$2}' | cut -c1-16)
-PYTHON_VERSION="3.11.6"
 
 # ---
 # Commands
