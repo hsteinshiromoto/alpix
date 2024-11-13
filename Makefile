@@ -36,6 +36,11 @@ run:
 	@echo "Running docker image ${IMAGE_TAG} ..."
 	docker run -it ${DOCKER_IMAGE_TAG} /bin/bash
 
+## Tag docker image as latest
+tag:
+	$(eval DOCKER_IMAGE_TAG=${DOCKER_IMAGE_NAME}:${IMAGE_TAG})
+
+	docker tag ${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest 
 # ---
 # Self Documenting Commands
 # ---
