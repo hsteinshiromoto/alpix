@@ -84,7 +84,7 @@ jobs:
       - name: Push to Docker Hub
         if: steps.changed_files.outputs.build_image == 'true'
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=ghcr.io/${{ github.repository }}/alpix
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
@@ -94,9 +94,8 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          echo IMAGE_NAME=$IMAGE_NAME
 
-          docker tag $IMAGE_ID:$VERSION ${{secrets.DOCKERHUB_USR}}/:$IMAGE_NAME:$VERSION
+          docker tag $IMAGE_ID:$VERSION ${{secrets.DOCKERHUB_USR}}/alpix:$VERSION
 
-          docker push ${{secrets.DOCKERHUB_USR}}/:$IMAGE_NAME:$VERSION 
+          docker push ${{secrets.DOCKERHUB_USR}}/alpix:$VERSION 
 
