@@ -47,7 +47,7 @@ jobs:
         run: |
           make image
 
-      - name: Push image to Github Registry
+      - name: PushGithubRegistry
         if: steps.changed_files.outputs.build_image == 'true'
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
@@ -71,7 +71,7 @@ jobs:
           docker push $IMAGE_ID:latest
       
       - name: login to docker hub
-        if: steps.changed_files.outputs.build_image == 'true'
+        if: steps.changed_files.outputs.build_image == 'true' || steps.PushGithubRegistry.outcome != 'success'
         id: docker-hub
         env:
           username: ${{secrets.DOCKERHUB_USR}}
@@ -80,7 +80,7 @@ jobs:
           docker login -u $username -p $password  
 
       - name: Push image to Docker Registry
-        if: steps.changed_files.outputs.build_image == 'true'
+        if: steps.changed_files.outputs.build_image == 'true'  || steps.PushGithubRegistry.outcome != 'success'
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
 
