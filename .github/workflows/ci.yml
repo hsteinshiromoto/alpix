@@ -99,3 +99,6 @@ jobs:
 
           docker push ${{secrets.DOCKERHUB_USR}}/alpix:$VERSION 
 
+          docker tag ${{secrets.DOCKERHUB_USR}}/alpix:$VERSION ${{secrets.DOCKERHUB_USR}}/alpix:latest
+
+          docker push ${{secrets.DOCKERHUB_USR}}/alpix:latest
