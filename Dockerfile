@@ -6,23 +6,23 @@ ENV PATH="/nix/var/nix/profiles/default/bin:$PATH"
 ENV HOME=/home/$USER
 
 RUN apk --no-cache add \
-	autoconf \
-	automake \
+	# autoconf \
+	# automake \
 	bash \
-	build-base \
-	cmake \
-	ninja \
-	coreutils \
+	# build-base \
+	# cmake \
+	# ninja \
+	# coreutils \
 	curl \
-	gettext-tiny-dev \
-	git \
-	libtool \
-	pkgconf \
+	# gettext-tiny-dev \
+	# git \
+	# libtool \
+	# pkgconf \
 	shadow \
-	sudo \
-	unzip \
-	stow \
-	npm \
+	# sudo \
+	# unzip \
+	# stow \
+	# npm \
 	xz
 
 
