@@ -67,6 +67,7 @@ jobs:
           docker push $IMAGE_ID:latest
       
       - name: login to docker hub
+        if: steps.changed_files.outputs.build_image == 'true'
         id: docker-hub
         env:
           username: ${{secrets.DOCKERHUB_USR}}
