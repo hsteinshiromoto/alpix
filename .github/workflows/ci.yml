@@ -17,6 +17,9 @@ jobs:
   build_docker_image:
     name: Build docker image and push
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     outputs:
       output1: ${{ steps.changed_files.outputs.build_image }}
 
