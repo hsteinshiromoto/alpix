@@ -28,7 +28,7 @@ jobs:
         uses: dorny/paths-filter@v2
         id: changed_files
         with:
-          base: dev
+          # base: dev
           filters: |
             build_image:
               - 'Dockerfile'
