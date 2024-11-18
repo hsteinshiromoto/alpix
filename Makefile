@@ -8,6 +8,7 @@ SHELL:=/bin/bash
 # include .env
 # export $(shell sed 's/=.*//' .env)
 
+HOST_ARCH=$(shell uname -m)
 PROJECT_PATH := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 GIT_REMOTE=$(shell basename $(shell git remote get-url origin))
 PROJECT_NAME=$(shell echo $(GIT_REMOTE:.git=))
@@ -26,7 +27,9 @@ image:
 	$(eval DOCKER_IMAGE_TAG=${DOCKER_IMAGE_NAME}:${IMAGE_TAG})
 
 	@echo "Building docker image ${IMAGE_TAG}"
-	docker buildx build	-t ${DOCKER_IMAGE_TAG} .
+	docker buildx build \
+		--platform linux/${HOST_ARCH} \
+		-t ${DOCKER_IMAGE_TAG} .
 	@echo "Done"
 
 ## Run /bin/bash inteactively in the container
