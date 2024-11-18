@@ -8,6 +8,7 @@ ENV HOME=/home/$USER
 RUN apk --no-cache add \
 	bash \
 	curl \
+	git \
 	shadow \
 	xz
 
