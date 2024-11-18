@@ -14,7 +14,8 @@ GIT_REMOTE=$(shell basename $(shell git remote get-url origin))
 PROJECT_NAME=$(shell echo $(GIT_REMOTE:.git=))
 CURRENT_VERSION=$(shell git tag -l --sort=-creatordate | head -n 1 | cut -d "v" -f2-)
 
-DOCKER_IMAGE_NAME=ghcr.io/hsteinshiromoto/${PROJECT_NAME}/${PROJECT_NAME}
+DOCKER_REGISTRY=ghcr.io
+DOCKER_IMAGE_NAME=${DOCKER_REGISTRY}/hsteinshiromoto/${PROJECT_NAME}/${PROJECT_NAME}
 
 IMAGE_TAG=$(shell git ls-files -s Dockerfile | awk '{print $$2}' | cut -c1-16)
 
@@ -31,6 +32,21 @@ image:
 		--platform linux/${HOST_ARCH} \
 		-t ${DOCKER_IMAGE_TAG} .
 	@echo "Done"
+
+	@echo "Tag and push Docker image ${DOCKER_IMAGE_NAME} as latest ..."
+  docker tag ${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest
+	@echo "Done"
+
+## Push Docker image to Registry
+push:
+	$(eval DOCKER_IMAGE_TAG=${DOCKER_IMAGE_NAME}:${IMAGE_TAG})
+
+	@echo "Pushing Docker image ${DOCKER_IMAGE_TAG} to ${DOCKER_REGISTRY} ..."
+	docker push ${DOCKER_IMAGE_TAG}
+	docker push ${DOCKER_IMAGE_NAME}:latest
+
+	@echo "Done"
+
 
 ## Run /bin/bash inteactively in the container
 run:
