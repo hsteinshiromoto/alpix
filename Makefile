@@ -33,17 +33,16 @@ image:
 		-t ${DOCKER_IMAGE_TAG} .
 	@echo "Done"
 
-	@echo "Tag and push Docker image ${DOCKER_IMAGE_NAME} as latest ..."
-  docker tag ${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest
-	@echo "Done"
-
 ## Push Docker image to Registry
-push:
+push: tag
 	$(eval DOCKER_IMAGE_TAG=${DOCKER_IMAGE_NAME}:${IMAGE_TAG})
 
 	@echo "Pushing Docker image ${DOCKER_IMAGE_TAG} to ${DOCKER_REGISTRY} ..."
+
 	docker push ${DOCKER_IMAGE_TAG}
 	docker push ${DOCKER_IMAGE_NAME}:latest
+	docker push ${DOCKER_IMAGE_TAG} hsteinshiromoto/${PROJECT_NAME}:${IMAGE_TAG}
+	docker push ${DOCKER_IMAGE_TAG} hsteinshiromoto/${PROJECT_NAME}:latest
 
 	@echo "Done"
 
@@ -57,9 +56,12 @@ run:
 
 ## Tag docker image as latest
 tag:
-	$(eval DOCKER_IMAGE_TAG=${DOCKER_IMAGE_NAME}:${IMAGE_TAG})
+	$(eval DOCKER_IMAGE_TAG=${DOCKER_IMAGE_NAME}:${IMAGE_TAG}) 
 
-	docker tag ${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest 
+	docker tag ${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest
+	docker tag ${DOCKER_IMAGE_TAG} hsteinshiromoto/${PROJECT_NAME}:${IMAGE_TAG}
+	docker tag ${DOCKER_IMAGE_TAG} hsteinshiromoto/${PROJECT_NAME}:latest
+
 # ---
 # Self Documenting Commands
 # ---
